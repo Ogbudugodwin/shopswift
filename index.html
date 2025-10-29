@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopSwift — Join the Waitlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+      color: #222;
+      line-height: 1.5;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #06c167;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #06c167;
+    }
+
+    /* Hamburger menu button (hidden on desktop) */
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-left: 12px;
+    }
+
+    .menu-toggle .bar {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #333;
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .hero {
+  height: 100vh;
+  background: 
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('hero-image.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #eee;
+}
+
+.waitlist-options {
+  margin-bottom: 20px;
+}
+
+.waitlist-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.vendor-btn {
+  background: #007bff;
+}
+
+.waitlist-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+
+    .waitlist-form input {
+      padding: 0.9rem;
+      width: 70%;
+      border: none;
+      border-radius: 6px 0 0 6px;
+      outline: none;
+    }
+
+    .waitlist-form button {
+      padding: 0.9rem 1.5rem;
+      border: none;
+      background-color: #06c167;
+      color: white;
+      font-weight: 600;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+    }
+
+.waitlist-form button:hover {
+  background: #007f44;
+}
+
+.discount-text {
+  margin-top: 20px;
+  color: #f8d210;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+  .waitlist-form input {
+    width: 200px;
+  }
+}
+
+    .section {
+      padding: 4rem 8%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .features {
+      display: grid;
+      /* Desktop: 3 columns so 3 cards on the first row and remaining cards wrap to the next row */
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Make layout responsive: switch to fluid columns on narrower screens */
+    @media (max-width: 1024px) {
+      .features {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      }
+    }
+
+    /* Desktop: switch to a flex-based layout so rows center properly
+       This keeps three cards on the first row and centers the two cards on the second row. */
+    @media (min-width: 1025px) {
+      .features {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* center items on each row */
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Make each card take roughly a third of the available width (minus gaps) */
+      .features .feature-card {
+        flex: 0 0 calc((100% - 4rem) / 3);
+        /* limit width so the card doesn't get too wide on very large screens */
+        max-width: 380px;
+      }
+    }
+
+    .feature-card {
+      padding: 2rem;
+      border-radius: 12px;
+      background-color: #f9f9f9;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .feature-card h3 {
+      margin-bottom: 0.5rem;
+      color: #06c167;
+    }
+
+    .cta {
+      background-color: #06c167;
+      color: white;
+      padding: 3rem 8%;
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta button {
+      padding: 0.9rem 2rem;
+      background: white;
+      color: #06c167;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    footer {
+      background: #111;
+      color: #ccc;
+      padding: 2rem 8%;
+      text-align: center;
+    }
+
+    footer a {
+      color: #06c167;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .waitlist-form input { width: 60%; }
+      /* Keep header in a single row on small screens so the logo is left and the
+         hamburger sits at the right edge. Nav remains hidden until toggled. */
+      header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: relative; /* anchor for absolutely positioned nav */
+        overflow: visible;
+      }
+      /* Show hamburger and hide nav by default on small screens */
+      .menu-toggle { display: block; }
+      /* Ensure nav stays hidden until the menu is opened. Use absolute positioning
+         so opening it doesn't push or reflow the header (logo + hamburger keep place). */
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        z-index: 999;
+      }
+
+      nav.open {
+        display: flex;
+      }
+
+      nav a {
+        display: block;
+        padding: 10px 12px;
+        margin: 0;
+        text-align: left;
+        border-radius: 8px;
+      }
+    }
+
+
+
+    /* Location Section */
+.location-section {
+  background-color: #f9f9f9;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.location-header h2 {
+  font-size: 2rem;
+  color: #111;
+}
+
+.location-header p {
+  color: #555;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+/* Map styling */
+#map {
+  width: 100%;
+  height: 400px;
+  border-radius: 12px;
+  margin: 0 auto 40px;
+  max-width: 1000px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* States grid */
+.states-grid h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 600;
+}
+
+.state-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.state {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.state:hover {
+  background: #00704a;
+  color: white;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+  #map {
+    height: 300px;
+  }
+}
+
+
+
+
+/* Why Join Early Section */
+.why-join {
+  background: #f8f9fa;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.why-join h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.why-join p {
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.reasons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.reason {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.reason:hover {
+  transform: translateY(-5px);
+}
+
+.reason h3 {
+  color: #00a859;
+  margin-bottom: 10px;
+}
+
+.reason p {
+  color: #333;
+}
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">ShopSwift</div>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+      <a href="#" style="color:#06c167; font-weight:600;">Join Waitlist</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+  <div class="hero-content">
+    <h1>Shop the Smart Way — Coming Soon!</h1>
+    <p>
+      We’re building a platform that connects you to your favorite local stores for fast, affordable shopping. 
+      Whether you're a customer or a vendor, join the waitlist today and enjoy exclusive discounts when we launch!
+    </p>
+    
+    <div class="waitlist-options">
+      <button class="waitlist-btn user-btn" id="userBtn">Join as Customer</button>
+      <button class="waitlist-btn vendor-btn" id="vendorBtn">Join as Vendor</button>
+    </div>
+
+    <form class="waitlist-form" id="waitlistForm">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Join Waitlist</button>
+    </form>
+
+    <p class="discount-text" id="discountText"></p>
+  </div>
+</section>
+
+
+  <section class="section">
+  <h2>How It Works</h2>
+  <div class="features">
+
+    <!-- For Shoppers -->
+    <div class="feature-card">
+      <h3>🛒 1. Browse & Shop</h3>
+      <p>Explore a wide range of local stores and online shops offering your favorite products — all in one place.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>⚡ 2. Order Instantly</h3>
+      <p>Add products to your cart and place your orders in just a few taps. We’ll handle the rest with fast, reliable delivery.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>📦 3. Track Your Delivery</h3>
+      <p>Stay updated as your order moves — from confirmation to doorstep delivery — with real-time tracking.</p>
+    </div>
+
+    <!-- For Vendors -->
+    <div class="feature-card">
+      <h3>🏬 4. Vendors — Get Started Easily</h3>
+      <p>Sign up, list your products, and start selling to thousands of ready buyers across Nigeria. It takes just minutes to set up.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>💰 5. Manage & Grow Your Sales</h3>
+      <p>Monitor your sales, respond to orders, and enjoy tools that help you reach more customers and increase profit.</p>
+    </div>
+
+  </div>
+</section>
+
+  <section class="why-join">
+  <div class="container">
+    <h2>Why Join Early?</h2>
+    <p>Be the first to enjoy exclusive benefits when our ecommerce platform launches!</p>
+
+    <div class="reasons">
+      <div class="reason">
+        <h3>🎁 Early Shopper Discount</h3>
+        <p>Join the waitlist as a customer and get <strong>15% off</strong> your first purchase when we launch.</p>
+      </div>
+
+      <div class="reason">
+        <h3>🛍️ Vendor Advantage</h3>
+        <p>Vendors who sign up early receive <strong>10% off</strong> platform fees for their first 3 months.</p>
+      </div>
+
+      <!-- <div class="reason">
+        <h3>🚀 Priority Access</h3>
+        <p>Get early access to the beta platform and exclusive marketplace features before public release.</p>
+      </div> -->
+
+      <div class="reason">
+        <h3>🤝 Community Perks</h3>
+        <p>Join a community of early adopters and enjoy promotional support to grow your store visibility.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Location Section -->
+<section class="location-section">
+  <div class="location-header">
+    <h2>Explore Our Service Across Nigeria</h2>
+    <p>Select your state to join the waitlist when we launch in your area.</p>
+  </div>
+
+  <!-- Real Map -->
+  <div id="map"></div>
+
+  <div class="states-grid">
+    <h3>Available States</h3>
+    <div class="state-list">
+      <a href="#" class="state">Abia</a>
+      <a href="#" class="state">Adamawa</a>
+      <a href="#" class="state">Akwa Ibom</a>
+      <a href="#" class="state">Anambra</a>
+      <a href="#" class="state">Bauchi</a>
+      <a href="#" class="state">Bayelsa</a>
+      <a href="#" class="state">Benue</a>
+      <a href="#" class="state">Borno</a>
+      <a href="#" class="state">Cross River</a>
+      <a href="#" class="state">Delta</a>
+      <a href="#" class="state">Ebonyi</a>
+      <a href="#" class="state">Edo</a>
+      <a href="#" class="state">Ekiti</a>
+      <a href="#" class="state">Enugu</a>
+      <a href="#" class="state">FCT Abuja</a>
+      <a href="#" class="state">Gombe</a>
+      <a href="#" class="state">Imo</a>
+      <a href="#" class="state">Jigawa</a>
+      <a href="#" class="state">Kaduna</a>
+      <a href="#" class="state">Kano</a>
+      <a href="#" class="state">Katsina</a>
+      <a href="#" class="state">Kebbi</a>
+      <a href="#" class="state">Kogi</a>
+      <a href="#" class="state">Kwara</a>
+      <a href="#" class="state">Lagos</a>
+      <a href="#" class="state">Nasarawa</a>
+      <a href="#" class="state">Niger</a>
+      <a href="#" class="state">Ogun</a>
+      <a href="#" class="state">Ondo</a>
+      <a href="#" class="state">Osun</a>
+      <a href="#" class="state">Oyo</a>
+      <a href="#" class="state">Plateau</a>
+      <a href="#" class="state">Rivers</a>
+      <a href="#" class="state">Sokoto</a>
+      <a href="#" class="state">Taraba</a>
+      <a href="#" class="state">Yobe</a>
+      <a href="#" class="state">Zamfara</a>
+    </div>
+  </div>
+</section>
+
+
+  <section class="cta">
+    <h2>Be First to Experience ShopSwift</h2>
+    <p>Get notified the moment we launch and enjoy exclusive benefits.</p>
+    <button>Join the Waitlist</button>
+  </section>
+
+
+
+
+
+  
+  <footer>
+    <p>© 2025 ShopSwift. All Rights Reserved.</p>
+    <p>
+      <a href="#">Facebook</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">Twitter</a>
+    </p>
+  </footer>
+
+  <script>
+    const form = document.querySelector('.waitlist-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      alert('🎉 You have successfully joined the waitlist!');
+      form.reset();
+    });
+
+
+
+    // Smooth scroll to waitlist form when a state is clicked
+document.querySelectorAll(".state").forEach(state => {
+  state.addEventListener("click", (e) => {
+    e.preventDefault();
+    const form = document.querySelector("#waitlist-form");
+    if (form) {
+      form.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
+
+
+// Hamburger menu toggle
+const menuToggle = document.querySelector('.menu-toggle');
+const mainNav = document.querySelector('nav');
+if (menuToggle && mainNav) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // Close menu when a nav link is clicked (mobile)
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (mainNav.classList.contains('open')) {
+        mainNav.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+}
+
+  </script>
+
+
+
+<!-- Leaflet JS and CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// Initialize the map centered on Nigeria
+const map = L.map('map').setView([9.0820, 8.6753], 6);
+
+// Add OpenStreetMap tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Nigeria state markers
+const states = [
+  { name: 'Lagos', coords: [6.5244, 3.3792] },
+  { name: 'Abuja (FCT)', coords: [9.0579, 7.4951] },
+  { name: 'Kano', coords: [12.0022, 8.5919] },
+  { name: 'Rivers', coords: [4.8156, 7.0498] },
+  { name: 'Enugu', coords: [6.4527, 7.5103] },
+  { name: 'Oyo', coords: [7.3775, 3.9470] },
+  { name: 'Kaduna', coords: [10.5061, 7.4381] },
+  { name: 'Anambra', coords: [6.2100, 7.0700] },
+  { name: 'Benue', coords: [7.3366, 8.7400] },
+  { name: 'Cross River', coords: [5.8702, 8.5988] },
+  { name: 'Borno', coords: [11.8333, 13.1500] },
+  { name: 'Ondo', coords: [7.2500, 5.2000] },
+  { name: 'Osun', coords: [7.7714, 4.5569] },
+  { name: 'Edo', coords: [6.3400, 5.6200] },
+  { name: 'Delta', coords: [5.5320, 5.8987] },
+  { name: 'Ekiti', coords: [7.6658, 5.3103] },
+  { name: 'Plateau', coords: [9.9330, 8.8900] },
+  { name: 'Katsina', coords: [12.9855, 7.6171] },
+  { name: 'Bauchi', coords: [10.3150, 9.8439] },
+  { name: 'Imo', coords: [5.4840, 7.0350] },
+  { name: 'Niger', coords: [10.4000, 5.7000] },
+  { name: 'Taraba', coords: [8.8900, 10.9800] },
+  { name: 'Kogi', coords: [7.8000, 6.7333] },
+  { name: 'Abia', coords: [5.4164, 7.5248] },
+  { name: 'Akwa Ibom', coords: [4.9057, 7.8537] },
+  { name: 'Bayelsa', coords: [4.7500, 6.0833] },
+  { name: 'Adamawa', coords: [9.3265, 12.3984] },
+  { name: 'Gombe', coords: [10.2906, 11.1710] },
+  { name: 'Yobe', coords: [12.2900, 11.4500] },
+  { name: 'Kebbi', coords: [12.4500, 4.2000] },
+  { name: 'Sokoto', coords: [13.0667, 5.2333] },
+  { name: 'Zamfara', coords: [12.2000, 6.2500] },
+  { name: 'Nasarawa', coords: [8.5333, 8.5333] },
+  { name: 'Ebonyi', coords: [6.3167, 8.1000] },
+  { name: 'Jigawa', coords: [12.0000, 9.5833] },
+  { name: 'Kwara', coords: [8.5000, 4.5500] },
+];
+
+// Add markers to map
+states.forEach(state => {
+  const marker = L.marker(state.coords).addTo(map);
+  marker.bindPopup(`<b>${state.name}</b><br>Click to join waitlist.`);
+  marker.on('click', () => {
+    const form = document.querySelector("#waitlist-form");
+    if (form) form.scrollIntoView({ behavior: "smooth" });
+  });
+});
+</script>
+
+
+</body>
+</html>
