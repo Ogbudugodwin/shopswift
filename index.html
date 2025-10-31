@@ -163,6 +163,7 @@
     .section {
       padding: 4rem 8%;
       text-align: center;
+      margin-top: -20px;
     }
 
     .section h2 {
@@ -209,8 +210,50 @@
     .feature-card {
       padding: 2rem;
       border-radius: 12px;
-      background-color: #f9f9f9;
       transition: transform 0.3s ease;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6));
+      z-index: -1;
+    }
+
+    .feature-card:nth-child(1)::before {
+      background-image: url('shopingitems.jpg');
+    }
+
+    .feature-card:nth-child(2)::before {
+      background-image: url('bike.jpg');
+    }
+
+    .feature-card:nth-child(3)::before {
+      background-image: url('offer.webp');
+    }
+
+    .feature-card:hover::before {
+      transform: scale(1.1);
     }
 
     .feature-card:hover {
@@ -220,12 +263,21 @@
     .feature-card h3 {
       margin-bottom: 0.5rem;
       color: #06c167;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+
+    .feature-card p {
+      color: #ffffff;
+      line-height: 1.6;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
 
     .cta {
       background-color: #06c167;
       color: white;
       padding: 3rem 8%;
+      margin-top: -95px;
     }
 
     .cta h2 {
@@ -307,6 +359,7 @@
   background-color: #f9f9f9;
   padding: 60px 20px;
   text-align: center;
+  margin-top: -90px;
 }
 
 .location-header h2 {
@@ -376,6 +429,7 @@
   background: #f8f9fa;
   padding: 80px 20px;
   text-align: center;
+  margin-top: -80px;
 }
 
 .why-join h2 {
@@ -397,25 +451,60 @@
 }
 
 .reason {
-  background: white;
+  /* Split background: white on top, brand color at bottom (different per card)
+     We use a CSS variable --reason-color for each card to keep the common
+     rules concise. Top white band is 70% so short headings + paragraph sit
+     comfortably in the white area and the bottom shows the brand color. */
+  --reason-color: #e8f6ef; /* default - overridden per card below */
+  background: linear-gradient(to bottom, #ffffff 0 70%, var(--reason-color) 70% 100%);
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   transition: 0.3s;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .reason:hover {
   transform: translateY(-5px);
 }
 
+.reasons .reason:nth-child(1) { --reason-color: #06c167; } /* brand green */
+.reasons .reason:nth-child(2) { --reason-color: black; } /* brand blue  */
+.reasons .reason:nth-child(3) { --reason-color:#06c167; } /* brand orange */
+
 .reason h3 {
-  color: #00a859;
+  color: #06c167; /* heading green per brand */
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .reason p {
-  color: #333;
+  color: #333; /* dark text so it reads well on the white top band */
+  line-height: 1.6;
 }
+/* Promotional GIF Section */
+.promo-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  padding: 0;
+  margin: 20px 0;
+  width: 100%;
+  overflow: hidden;
+  margin-top: -55px;
+}
+
+.promo-gif {
+  width: 100%;
+  height: 90px; /* Reduced height */
+  object-fit: cover;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
 
   </style>
 </head>
@@ -430,24 +519,24 @@
     </button>
     <nav>
       <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
+      <a href="#">Features</a>
+      <a href="#">Gift Ideas</a>
       <a href="#" style="color:#06c167; font-weight:600;">Join Waitlist</a>
     </nav>
   </header>
 
   <section class="hero">
   <div class="hero-content">
-    <h1>Shop the Smart Way — Coming Soon!</h1>
+    <h1>Shop faster. Buy smarter. The Swift Way. 🛍️</h1>
     <p>
-      We’re building a platform that connects you to your favorite local stores for fast, affordable shopping. 
-      Whether you're a customer or a vendor, join the waitlist today and enjoy exclusive discounts when we launch!
+      ShopSwift is your ultimate eCommerce destination — where convenience meets quality. Discover trending products from trusted brands, enjoy seamless shopping, secure payments, and real-time order tracking.
+Join early and unlock exclusive launch rewards made just for our first shoppers.
     </p>
     
-    <div class="waitlist-options">
-      <button class="waitlist-btn user-btn" id="userBtn">Join as Customer</button>
-      <button class="waitlist-btn vendor-btn" id="vendorBtn">Join as Vendor</button>
-    </div>
+    <!-- <div class="waitlist-options"> -->
+      <!-- <button class="waitlist-btn user-btn" id="userBtn">Join as Customer</button> -->
+      <!-- <button class="waitlist-btn vendor-btn" id="vendorBtn">Join as Vendor</button> -->
+    <!-- </div> -->
 
     <form class="waitlist-form" id="waitlistForm">
       <input type="email" placeholder="Enter your email" required>
@@ -460,53 +549,59 @@
 
 
   <section class="section">
-  <h2>How It Works</h2>
+  <h2>🛍️ The Smarter Way to Shop Online</h2>
   <div class="features">
 
     <!-- For Shoppers -->
     <div class="feature-card">
-      <h3>🛒 1. Browse & Shop</h3>
-      <p>Explore a wide range of local stores and online shops offering your favorite products — all in one place.</p>
+      <h3>🛒 1. Discover & Explore</h3>
+      <p>Find everything you love — from everyday essentials to trending products — all in one seamless e-commerce experience. ShopSwift makes discovering new items effortless and exciting.</p>
     </div>
 
     <div class="feature-card">
-      <h3>⚡ 2. Order Instantly</h3>
-      <p>Add products to your cart and place your orders in just a few taps. We’ll handle the rest with fast, reliable delivery.</p>
+      <h3>⚡ 2. Order & Track Easily</h3>
+      <p>Add items to your cart, checkout in seconds, and stay updated as your order moves from payment to doorstep with real-time tracking and reliable delivery.</p>
     </div>
 
     <div class="feature-card">
-      <h3>📦 3. Track Your Delivery</h3>
-      <p>Stay updated as your order moves — from confirmation to doorstep delivery — with real-time tracking.</p>
+      <h3>📦 3. Shop Smarter, Earn More</h3>
+      <p>Enjoy exclusive deals, cashback, and loyalty rewards every time you shop. With ShopSwift, every purchase brings you closer to more savings and smarter shopping.</p>
     </div>
 
-    <!-- For Vendors -->
+    <!-- For Vendors
     <div class="feature-card">
-      <h3>🏬 4. Vendors — Get Started Easily</h3>
-      <p>Sign up, list your products, and start selling to thousands of ready buyers across Nigeria. It takes just minutes to set up.</p>
+      <h3>🏬 4. Sell & Grow as a Vendor</h3>
+      <p>List your products easily, reach more buyers nationwide, and start selling in minutes. ShopSwift gives you the tools to grow faster.</p>
     </div>
 
     <div class="feature-card">
-      <h3>💰 5. Manage & Grow Your Sales</h3>
-      <p>Monitor your sales, respond to orders, and enjoy tools that help you reach more customers and increase profit.</p>
-    </div>
+      <h3>💰 5. Manage, Analyze & Scale</h3>
+      <p>Get insights that matter — monitor your sales, respond to orders,track performance, and use smart tools designed to boost visibility and profit.</p>
+    </div> -->
 
   </div>
 </section>
 
+<!-- Promotional GIF Section -->
+<section class="promo-section">
+  <img src="app-online-store.gif" alt="ShopSwift Promo" class="promo-gif">
+</section>
+
+
   <section class="why-join">
   <div class="container">
-    <h2>Why Join Early?</h2>
+    <h2>✨ Early Access Comes with Exclusive Rewards</h2>
     <p>Be the first to enjoy exclusive benefits when our ecommerce platform launches!</p>
 
     <div class="reasons">
       <div class="reason">
-        <h3>🎁 Early Shopper Discount</h3>
-        <p>Join the waitlist as a customer and get <strong>5% off</strong> your first purchase when we launch.</p>
+        <h3>🎁 Early Shopper Bonus</h3>
+        <p>Join the waitlist and get <strong>5% off</strong> your first purchase, including gift items, when we launch. Shop early and start celebrating smarter.</p>
       </div>
 
       <div class="reason">
-        <h3>🛍️ Vendor Advantage</h3>
-        <p>Vendors who sign up early receive <strong>10% off</strong> platform fees for their first 3 months.</p>
+        <h3>🚀 Priority Access</h3>
+        <p>Get first-hand access to exclusive product drops, new collections, and trending gift ideas before anyone else.</p>
       </div>
 
       <!-- <div class="reason">
@@ -515,8 +610,8 @@
       </div> -->
 
       <div class="reason">
-        <h3>🤝 Community Perks</h3>
-        <p>Join a community of early adopters and enjoy promotional support to grow your store visibility.</p>
+        <h3>💎 Loyalty Perks</h3>
+        <p>Earn reward points and unlock personalized deals every time you shop — whether it’s for yourself or someone special.</p>
       </div>
     </div>
   </div>
@@ -531,7 +626,7 @@
   <!-- Real Map -->
   <div id="map"></div>
 
-  <div class="states-grid">
+  <!-- <div class="states-grid">
     <h3>Available Nationwide:</h3>
     <div class="state-list">
       <a href="#" class="state">Abia</a>
@@ -572,7 +667,7 @@
       <a href="#" class="state">Yobe</a>
       <a href="#" class="state">Zamfara</a>
     </div>
-  </div>
+  </div> -->
 </section>
 
 
